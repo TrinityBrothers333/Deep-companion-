@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Companion - AI Emotional Intelligence</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const Brain = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>;
+    const Mic = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>;
+    const MicOff = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="2" x2="22" y1="2" y2="22"/><path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"/><path d="M5 10v2a7 7 0 0 0 12 5"/><path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12"/><line x1="12" x2="12" y1="19" y2="22"/></svg>;
+    const Send = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>;
+    const Activity = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>;
+    const Sparkles = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
+    const TrendingUp = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>;
+    const Eye = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>;
+    const Waves = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>;
+    const Book = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>;
+    const Lightbulb = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>;
+    const Heart = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>;
+    const Zap = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+
+    function DeepCompanionApp() {
+      const [messages, setMessages] = useState([]);
+      const [input, setInput] = useState('');
+      const [isListening, setIsListening] = useState(false);
+      const [isProcessing, setIsProcessing] = useState(false);
+      const [emotionalState, setEmotionalState] = useState({
+        current: 'neutral',
+        intensity: 0.5,
+        trend: 'stable',
+        microSignals: []
+      });
+      const [moodHistory, setMoodHistory] = useState([]);
+      const [userStyle, setUserStyle] = useState('balanced_empathetic');
+      const [feedbackScores, setFeedbackScores] = useState({ deep: 0, helpful: 0, blunt: 0, poetic: 0 });
+      const messagesEndRef = useRef(null);
+      const recognitionRef = useRef(null);
+
+      useEffect(() => {
+        const saved = localStorage.getItem('companionMessages');
+        const savedMoods = localStorage.getItem('companionMoods');
+        const savedStyle = localStorage.getItem('userStyle');
+        const savedFeedback = localStorage.getItem('feedbackScores');
+        
+        if (saved) setMessages(JSON.parse(saved));
+        if (savedMoods) setMoodHistory(JSON.parse(savedMoods));
+        if (savedStyle) setUserStyle(savedStyle);
+        if (savedFeedback) setFeedbackScores(JSON.parse(savedFeedback));
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          recognitionRef.current = new SpeechRecognition();
+          recognitionRef.current.continuous = true;
+          recognitionRef.current.interimResults = true;
+          recognitionRef.current.onresult = (event) => {
+            const transcript = Array.from(event.results).map(result => result[0].transcript).join('');
+            setInput(transcript);
+          };
+          recognitionRef.current.onerror = () => setIsListening(false);
+        }
+      }, []);
+
+      useEffect(() => { localStorage.setItem('companionMessages', JSON.stringify(messages)); }, [messages]);
+      useEffect(() => { localStorage.setItem('companionMoods', JSON.stringify(moodHistory)); }, [moodHistory]);
+      useEffect(() => { localStorage.setItem('userStyle', userStyle); }, [userStyle]);
+      useEffect(() => { localStorage.setItem('feedbackScores', JSON.stringify(feedbackScores)); }, [feedbackScores]);
+      useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
+
+      const toggleListening = () => {
+        if (!recognitionRef.current) { alert('Voice recognition not supported. Try Chrome or Edge.'); return; }
+        if (isListening) { recognitionRef.current.stop(); setIsListening(false); } 
+        else { recognitionRef.current.start(); setIsListening(true); }
+      };
+
+      const analyzeMicroSignals = (text) => {
+        const signals = [];
+        if ((text.match(/!/g) || []).length > 2) signals.push({ type: 'excitement', intensity: 0.8 });
+        if ((text.match(/\?/g) || []).length > 1) signals.push({ type: 'uncertainty', intensity: 0.6 });
+        if ((text.match(/\.\.\./g) || []).length > 0) signals.push({ type: 'hesitation', intensity: 0.7 });
+        const capsRatio = (text.match(/[A-Z]/g) || []).length / Math.max(text.length, 1);
+        if (capsRatio > 0.3) signals.push({ type: 'urgency', intensity: 0.9 });
+        const negativeWords = ['sad', 'tired', 'exhausted', 'depressed', 'anxious', 'worried', 'stressed', 'overwhelmed', 'afraid', 'scared', 'lonely'];
+        const positiveWords = ['happy', 'excited', 'great', 'amazing', 'wonderful', 'love', 'joy', 'grateful'];
+        const lowerText = text.toLowerCase();
+        negativeWords.forEach(word => { if (lowerText.includes(word)) signals.push({ type: 'distress', intensity: 0.8 }); });
+        positiveWords.forEach(word => { if (lowerText.includes(word)) signals.push({ type: 'positivity', intensity: 0.7 }); });
+        return signals;
+      };
+
+      const predictMood = (text, signals) => {
+        let mood = 'neutral', intensity = 0.5;
+        const distressSignals = signals.filter(s => s.type === 'distress');
+        const positiveSignals = signals.filter(s => s.type === 'positivity');
+        if (distressSignals.length > 0) { mood = 'distressed'; intensity = Math.min(0.9, distressSignals.reduce((sum, s) => sum + s.intensity, 0) / distressSignals.length); }
+        else if (positiveSignals.length > 0) { mood = 'uplifted'; intensity = Math.min(0.9, positiveSignals.reduce((sum, s) => sum + s.intensity, 0) / positiveSignals.length); }
+        else if (signals.find(s => s.type === 'excitement')) { mood = 'energized'; intensity = 0.7; }
+        else if (signals.find(s => s.type === 'hesitation')) { mood = 'contemplative'; intensity = 0.6; }
+        return { mood, intensity, signals };
+      };
+
+      const searchKnowledge = (query) => {
+        const knowledge = {
+          'cry': { philosophy: "Plato's Republic suggests tears align the soul's three parts—reason, spirit, appetite.", neuroscience: "Crying releases stress hormones like cortisol (Frey, 1985). Activates parasympathetic nervous system.", art: "Billie Eilish: 'I let it out to let you in.' Leonard Cohen: 'There is a crack in everything, that's how the light gets in.'", synthesis: "Crying is your body's intelligent design for emotional processing. It's not weakness—it's biological wisdom." },
+          'love': { philosophy: "Plato's Symposium: Love is recognizing your other half. Kierkegaard: Love is a leap of faith into the unknown.", neuroscience: "Oxytocin and dopamine floods during attachment. Mirror neurons activate—you literally feel their emotions as your own.", art: "Leonard Cohen: 'Love is not a victory march, it's a cold and broken hallelujah.'", synthesis: "Love blurs the boundary between self and other. You'll know because their absence feels like missing part of yourself." },
+          'silence': { philosophy: "Pascal: 'All of humanity's problems stem from inability to sit quietly in a room alone.'", neuroscience: "Default Mode Network activates in silence—brain's introspection system.", art: "Simon & Garfunkel: 'Hello darkness, my old friend.'", synthesis: "Silence terrifies because it forces you to face yourself. That's not a bug—it's the feature." },
+          'meaning': { philosophy: "Viktor Frankl: Meaning comes through suffering, creation, or experiencing beauty.", neuroscience: "Prefrontal cortex seeks patterns, narratives. Meaning-making is survival mechanism.", art: "David Bowie: 'I don't know where I'm going from here, but I promise it won't be boring.'", synthesis: "Meaning isn't found—it's created. Through what you suffer, what you create, what you experience." }
+        };
+        const lowerQuery = query.toLowerCase();
+        for (const [keyword, data] of Object.entries(knowledge)) { if (lowerQuery.includes(keyword)) return data; }
+        return { philosophy: "The question itself reveals your consciousness.", neuroscience: "Your brain's anterior cingulate cortex is processing this uncertainty.", art: "Bob Dylan: 'The answer is blowin' in the wind.'", synthesis: "I don't have all the answers. But I'm here, listening, thinking with you." };
+      };
+
+      const generateDeepInsight = async (userMessage) => {
+        setIsProcessing(true);
+        const signals = analyzeMicroSignals(userMessage);
+        const prediction = predictMood(userMessage, signals);
+        setEmotionalState({ current: prediction.mood, intensity: prediction.intensity, trend: 'stable', microSignals: signals });
+        setMoodHistory(prev => [...prev, { timestamp: new Date().toISOString(), mood: prediction.mood, intensity: prediction.intensity, message: userMessage.substring(0, 30) }].slice(-20));
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        const k = searchKnowledge(userMessage);
+        let response = userStyle === 'blunt_direct' ? `${k.synthesis}\n\nFacts: ${k.neuroscience}` :
+                       userStyle === 'poetic_metaphorical' ? `${k.art}\n\n${k.synthesis}` :
+                       userStyle === 'philosophical_deep' ? `${k.philosophy}\n\n${k.neuroscience}\n\n${k.synthesis}` :
+                       `${k.synthesis}\n\n**Philosophy:** ${k.philosophy}\n\n**Science:** ${k.neuroscience}\n\n**Art:** ${k.art}`;
+        setIsProcessing(false);
+        return response;
+      };
+
+      const handleSend = async () => {
+        if (!input.trim()) return;
+        const userMessage = { id: Date.now(), role: 'user', content: input, timestamp: new Date().toISOString() };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        const aiResponse = await generateDeepInsight(input);
+        setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', content: aiResponse, timestamp: new Date().toISOString(), mood: emotionalState.current }]);
+      };
+
+      const handleFeedback = (messageId, feedbackType) => {
+        setFeedbackScores(prev => ({ ...prev, [feedbackType]: prev[feedbackType] + 1 }));
+        const total = Object.values(feedbackScores).reduce((a, b) => a + b, 0) + 1;
+        if (feedbackScores.blunt + (feedbackType === 'blunt' ? 1 : 0) > total * 0.4) setUserStyle('blunt_direct');
+        else if (feedbackScores.poetic + (feedbackType === 'poetic' ? 1 : 0) > total * 0.4) setUserStyle('poetic_metaphorical');
+        else if (feedbackScores.deep + (feedbackType === 'deep' ? 1 : 0) > total * 0.4) setUserStyle('philosophical_deep');
+        else setUserStyle('balanced_empathetic');
+        setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, userFeedback: feedbackType } : msg));
+      };
+
+      const moodColors = {
+        distressed: { bg: 'from-red-900/30 to-red-900/10', text: 'text-red-400', border: 'border-red-500/50' },
+        uplifted: { bg: 'from-green-900/30 to-green-900/10', text: 'text-green-400', border: 'border-green-500/50' },
+        energized: { bg: 'from-yellow-900/30 to-yellow-900/10', text: 'text-yellow-400', border: 'border-yellow-500/50' },
+        contemplative: { bg: 'from-purple-900/30 to-purple-900/10', text: 'text-purple-400', border: 'border-purple-500/50' },
+        neutral: { bg: 'from-slate-900/30 to-slate-900/10', text: 'text-slate-400', border: 'border-slate-500/50' }
+      };
+      const currentMoodColor = moodColors[emotionalState.current] || moodColors.neutral;
+
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-white">
+          <div className="max-w-7xl mx-auto h-screen flex flex-col">
+            <header className="border-b border-purple-900/50 bg-slate-950/80 backdrop-blur-md p-6">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center"><Brain /></div>
+                  <div><h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">Deep Companion</h1><p className="text-sm text-purple-400/80">AI Knowledge • Emotional Intelligence</p></div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className={`px-4 py-2 rounded-full bg-gradient-to-r ${currentMoodColor.bg} border ${currentMoodColor.border}`}><div className="flex items-center gap-2"><Activity /><span className={`text-sm font-medium ${currentMoodColor.text} capitalize`}>{emotionalState.current}</span></div></div>
+                  <div className="px-4 py-2 rounded-full bg-purple-900/30 border border-purple-500/30"><span className="text-xs text-purple-300">Style: {userStyle.replace(/_/g, ' ')}</span></div>
+                </div>
+              </div>
+            </header>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {messages.length === 0 && (
+                <div className="text-center py-16 space-y-6">
+                  <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">I see you</h2>
+                  <p className="text-purple-300/70 max-w-md mx-auto">Ask me anything. I'll synthesize philosophy, neuroscience, and art. I adapt to your style—the more you use me, the better I get.</p>
+                </div>
+              )}
+
+              {messages.map((msg) => (
+                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-2xl ${msg.role === 'user' ? 'ml-12' : 'mr-12'}`}>
+                    <div className={`rounded-2xl p-4 ${msg.role === 'user' ? 'bg-gradient-to-br from-purple-600 to-pink-600 text-white' : 'bg-slate-900/60 backdrop-blur-sm border border-purple-900/50 text-purple-100'}`}>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                    </div>
+                    {msg.role === 'assistant' && (
+                      <div className="mt-2 ml-4 flex items-center gap-3 flex-wrap">
+                        <button onClick={() => handleFeedback(msg.id, 'deep')} className={`text-xs px-2 py-1 rounded ${msg.userFeedback === 'deep' ? 'bg-purple-500 text-white' : 'bg-purple-900/30 text-purple-400 hover:bg-purple-900/50'}`}>🧠 Deep</button>
+                        <button onClick={() => handleFeedback(msg.id, 'helpful')} className={`text-xs px-2 py-1 rounded ${msg.userFeedback === 'helpful' ? 'bg-green-500 text-white' : 'bg-green-900/30 text-green-400 hover:bg-green-900/50'}`}>✓ Helpful</button>
+                        <button onClick={() => handleFeedback(msg.id, 'blunt')} className={`text-xs px-2 py-1 rounded ${msg.userFeedback === 'blunt' ? 'bg-orange-500 text-white' : 'bg-orange-900/30 text-orange-400 hover:bg-orange-900/50'}`}>⚡ Blunt</button>
+                        <button onClick={() => handleFeedback(msg.id, 'poetic')} className={`text-xs px-2 py-1 rounded ${msg.userFeedback === 'poetic' ? 'bg-pink-500 text-white' : 'bg-pink-900/30 text-pink-400 hover:bg-pink-900/50'}`}>✨ Poetic</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {isProcessing && <div className="flex justify-start"><div className="bg-slate-900/60 backdrop-blur-sm border border-purple-900/50 rounded-2xl p-4"><span className="text-sm text-purple-300/70">Synthesizing knowledge...</span></div></div>}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <div className="p-6 border-t border-purple-900/50 bg-slate-950/80 backdrop-blur-md">
+              <div className="flex items-center gap-3">
+                <button onClick={toggleListening} className={`p-3 rounded-xl ${isListening ? 'bg-red-600' : 'bg-purple-600'}`}>{isListening ? <MicOff /> : <Mic />}</button>
+                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()} placeholder="Ask anything: Why do people cry? What is love?" className="flex-1 bg-slate-900/60 border border-purple-900/50 rounded-xl px-4 py-3 text-purple-100 placeholder-purple-400/40 outline-none" disabled={isProcessing} />
+                <button onClick={handleSend} disabled={!input.trim() || isProcessing} className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl disabled:opacity-50"><Send /></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<DeepCompanionApp />, document.getElementById('root'));
+  </script>
+</body>
+</html>
